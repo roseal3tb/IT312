@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مربع · اختبار أساسيات الشعر العربي</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f5f5f5; }
+        .content { min-height: 500px; padding: 40px 50px; background-color: #f9f9f9; }
+        .quiz-container { max-width: 900px; margin: 0 auto; background: #eaf3fd; padding: 2.5rem; border-radius: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .question { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #ccc; }
+        .question h3 { margin-bottom: 15px; color: #0a2647; font-size: 1.2rem; }
+        .option { margin: 10px 0; display: flex; align-items: center; gap: 10px; }
+        .option input { width: 18px; height: 18px; }
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 30px; gap: 15px; flex-wrap: wrap; }
+        .nav-btn, .submit-btn { padding: 12px 30px; background: #f3b33d; border: none; border-radius: 25px; font-weight: bold; cursor: pointer; text-decoration: none; color: #000; font-size: 1rem; display: inline-block; text-align: center; }
+        .submit-btn { background: #0a2647; color: white; }
+        h1 { font-size: 2.2rem; text-align: center; margin-bottom: 30px; color: #0a2647; }
+        .breadcrumb { font-size: 0.9rem; color: gray; margin-bottom: 20px; }
+        .breadcrumb a { color: gray; text-decoration: none; }
+        @media (max-width: 768px) { .content { padding: 20px; } .quiz-container { padding: 1.5rem; } h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+<div class="page-prototype">
+    <div class="navbar">
+        <div class="nav-right">
+            <a href="HomePage.HTML"><img src="images/right-logo.png" alt="مربع" class="header-logo-right"></a>
+            <a href="HomePage.HTML">الرئيسية</a>
+            <a href="CoursePage.HTML">المجتمعات</a>
+            <a href="MurabaiPage.html">مربعي</a>
+            <a href="AboutUsPage.HTML">من نحن</a>
+            <a href="ContactUsPage.HTML">تواصل معنا</a>
+        </div>
+        <div class="nav-left"><img src="images/left-logo.png" alt="Logo" class="header-logo-left"></div>
+    </div>
+
+    <div class="content">
+        <div class="breadcrumb">
+            <a href="HomePage.HTML">الرئيسية</a> &gt;
+            <a href="CoursePage.HTML">المجتمعات</a> &gt;
+            <a href="CoursePage.HTML?community=writing">المجتمع الكتابي</a> &gt;
+            <span>اختبار أساسيات الشعر العربي</span>
+        </div>
+
+        <h1>اختبار درس: أساسيات الشعر العربي</h1>
+
+        <div class="quiz-container">
+            <form id="quizForm">
+                
+                <div class="question">
+                    <h3>1. « خَمسٌ وستونَ في أجفانِ إِعصاري.. أمَا سئمتَ ارتحالًا أيٌّها السَاري»
+هل البيت موزون؟
+                    </h3>
+                    <div class="option"><input type="radio" name="q1" value="a"><label>أ) صح</label></div>
+                    <div class="option"><input type="radio" name="q1" value="b"><label>ب) خطأ</label></div>
+                </div>
+
+          
+                <div class="question">
+                    <h3>2.  «ريمٌ على القاعِ بينَ البانِ والعلمِ.. أحلَّ سفكُ دَمي 
+                       _________»
+                        </h3>
+                    <div class="option"><input type="radio" name="q2" value="a"><label>أ) الحرما</label></div>
+                    <div class="option"><input type="radio" name="q2" value="b"><label>ب) الحُرُمِ</label></div>
+                    <div class="option"><input type="radio" name="q2" value="c"><label>ج) الحُرُمُ</label></div>
+                    <div class="option"><input type="radio" name="q2" value="d"><label>د) الحرِمِ</label></div>
+                </div>
+
+                <!-- سؤال 3 (المعنى من البيت) -->
+                <div class="question">
+                    <h3>«ياعَالمَ الغيبِ ذنبي أنتَ تعرِفهُ.. وأنتَ تعلمُ إعلانِي وإسراري» 
+المعنى من البيت؟
+
+
+                        </h3>
+                    <div class="option"><input type="radio" name="q3" value="a"><label>أ) التضرُّع إلى الله بفقره وذنبه</label></div>
+                    <div class="option"><input type="radio" name="q3" value="b"><label>ب) مدح الله سبحانه وتعالى</label></div>
+                    <div class="option"><input type="radio" name="q3" value="c"><label>ج) الفخر بالنفس والمال</label></div>
+                    <div class="option"><input type="radio" name="q3" value="d"><label>د) وصف الطبيعة وجمالها</label></div>
+                </div>
+
+           
+                <div class="question">
+                    <h3>4. أي من الأوزان التالية يُعتبر من أوزان الشعر العربي الأصيلة؟</h3>
+                    <div class="option"><input type="radio" name="q4" value="a"><label>أ) البحر الطويل</label></div>
+                    <div class="option"><input type="radio" name="q4" value="b"><label>ب) بحر النثر</label></div>
+                    <div class="option"><input type="radio" name="q4" value="c"><label>ج) البحر التفعيلة الحرة</label></div>
+                    <div class="option"><input type="radio" name="q4" value="d"><label>د) بحر الشعر المنثور</label></div>
+                </div>
+
+               
+                <div class="question">
+                    <h3>5. أي من الآتي هو عنصر أساسي في بناء القصيدة العربية العمودية؟</h3>
+                    <div class="option"><input type="radio" name="q5" value="a"><label>أ) الوحدة العضوية</label></div>
+                    <div class="option"><input type="radio" name="q5" value="b"><label>ب) الوزن والقافية</label></div>
+                    <div class="option"><input type="radio" name="q5" value="c"><label>ج) النثر المسجوع</label></div>
+                    <div class="option"><input type="radio" name="q5" value="d"><label>د) التفعيلة العشوائية</label></div>
+                </div>
+
+                <div class="nav-buttons">
+                    <a href="Lesson3Page2.html" class="nav-btn">→ السابق</a>
+                    <button type="button" id="submitQuiz" class="submit-btn"> انهاء الاختبار ← </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="custom-footer">
+        <div class="footer-col"><h4>حساباتنا</h4><ul><li>murabba3</li></ul></div>
+        <div class="logo-placeholder"><img src="images/footer.png"></div>
+        <div class="footer-col"><h4>تواصل معنا</h4><ul><li>info@murabba3.com</li></ul></div>
+    </div>
+    <div class="copyright">Copyright © 2026 مربع. جميع الحقوق محفوظة</div>
+</div>
+
+<script>
+    // الإجابات الصحيحة
+    const correctAnswers = { 
+        q1: 'a',    // صح
+        q2: 'b',    // الحُرُمِ
+        q3: 'a',    // التضرُّع إلى الله بفقره وذنبه
+        q4: 'a',    // البحر الطويل
+        q5: 'b'     // الوزن والقافية
+    };
+    
+    const submitBtn = document.getElementById('submitQuiz');
+    const lessonId = 'Lesson3';
+    const lessonName = 'أساسيات الشعر العربي';
+
+    submitBtn.addEventListener('click', function() {
+        let allAnswered = true;
+        for (let i = 1; i <= 5; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (!selected) { allAnswered = false; break; }
+        }
+         if (!allAnswered) {
+            alert('  ⚠️ الرجاء الإجابة على جميع الأسئلة قبل إنهاء الاختبار');
+            return;
+        }
+
+        let score = 0;
+        for (let i = 1; i <= 5; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correctAnswers[`q${i}`]) score++;
+        }
+        const percentage = (score / 5) * 100;
+        const storageKey = `bestScore_${lessonId}`;
+        let bestScore = localStorage.getItem(storageKey);
+        if (bestScore === null || percentage > parseFloat(bestScore)) {
+            localStorage.setItem(storageKey, percentage);
+        }
+        window.location.href = `ResultPage.html?score=${percentage}&lesson=${encodeURIComponent(lessonName)}&lessonId=${lessonId}`;
+    });
+</script>
+</body>
+</html>

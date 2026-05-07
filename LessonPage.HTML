@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مربع · الدرس</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-prototype">
+        <div class="navbar">
+            <div class="nav-right">
+                <a href="LessonPage.HTML">
+                    <img src="images/right-logo.png" alt="مربع" class="header-logo-right">
+                </a>
+                <a href="HomePage.HTML">الرئيسية</a>
+                <a href="CoursePage.HTML">المجتمعات</a>
+                <a href="MurabaiPage.html">مربعي</a>
+                <a href="AboutUsPage.HTML">من نحن</a>
+                <a href="ContactUsPage.HTML">تواصل معنا</a>
+            </div>
+
+            <div class="nav-left">
+                <img src="images/left-logo.png" alt="Logo" class="header-logo-left">
+            </div>
+        </div>
+
+        <div class="content">
+            
+            <!-- Breadcrumbs -->
+            <div style="font-size:0.9rem; color:gray; margin-bottom:10px;">
+                <a href="HomePage.HTML" style="text-decoration:none; color:gray;">الرئيسية</a> &gt; 
+                <a href="CoursePage.HTML" style="text-decoration:none; color:gray;">المجتمعات</a> &gt; 
+                <span>مقدمة المتجهات</span>
+            </div>
+
+            <div id="page1" class="lesson-page active">
+                <h1 style="font-size: 2.5rem;">درس: مقدمة المتجهات</h1>
+                <div class="lesson-description">
+                    <p>المتجهات هي كميات فيزيائية تمتاز بأن لها مقداراً واتجاهاً، وتستخدم لتمثيل القوى والسرعات في المستوى الإحداثي.</p>
+                </div>
+                <div style="height:300px; background:#f9f9f9; border:1px dashed #ccc; margin:2rem 0; display:flex; align-items:center; justify-content:center; font-size: 1.5rem;">صورة توضيحية كبيرة</div>
+            </div>
+
+            <div id="page2" class="lesson-page">
+                <h1 style="font-size: 2.5rem;">تابع الدرس: تحليل المتجهات</h1>
+                <table class="lesson-table">
+                    <tr style="background:#0a2647; color: white;">
+                        <th>المفهوم العلمي</th>
+                        <th>الرمز الرياضي</th>
+                        <th>الوصف</th>
+                    </tr>
+                    <tr>
+                        <td>الكمية المتجهة</td>
+                        <td>→A</td>
+                        <td>تمثيل السهم للمقدار والاتجاه</td>
+                    </tr>
+                    <tr>
+                        <td>مركبة x</td>
+                        <td>Ax</td>
+                        <td>مسقط المتجه على محور السينات</td>
+                    </tr>
+                </table>
+                <button style="background:#f3b33d; border:none; padding:18px 50px; border-radius:35px; margin-top:40px; display:block; width:fit-content; margin: 40px auto; font-weight:bold; font-size: 1.2rem; cursor: pointer;">الذهاب إلى الاختبار</button>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; margin-top: 3rem;">
+                <button style="padding: 10px 30px; border-radius: 20px; cursor: pointer;">السابق</button>
+                <span id="indicator" style="font-weight: bold;">الصفحة 1/2</span>
+                <button style="padding: 10px 30px; border-radius: 20px; cursor: pointer;">التالي</button>
+            </div>
+        </div>
+
+        <div class="custom-footer">
+            <div class="footer-col">
+                <h4>حساباتنا</h4>
+                <ul class="bullet-list social-links">
+                    <li><img src="images/snapchat.PNG"> murabba3</li>
+                    <li><img src="images/x.PNG"> murabba3</li>
+                    <li><img src="images/instagram.JPG"> murabba3</li>
+                </ul>
+            </div>
+            <div class="logo-placeholder">
+                <img src="images/footer.png">
+            </div>
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <ul class="bullet-list">
+                    <li>📧 info@murabba3.com</li>
+                    <li>📞 +966 50 123 4567</li>
+                    <li>📍 الرياض، السعودية</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">Copyright © 2026 Murabba3</div>
+    </div>
+
+    <!-- التنبيه بعد 3 ثوانٍ -->
+    <script>
+        setTimeout(function() {
+            alert("🎯 هدف الدرس: فهم مفهوم المتجهات ككميات فيزيائية ذات مقدار واتجاه، وكيفية تحليلها في المستوى الإحداثي.\n\n📢 تذكير: لا تنسى حل الاختبار بعد الانتهاء من الدرس!");
+        }, 3000);
+    </script>
+
+    <!-- تفعيل أزرار التنقل والاختبار -->
+    <script>
+        const page1 = document.getElementById('page1');
+        const page2 = document.getElementById('page2');
+        const buttons = document.querySelectorAll('.content > div:last-of-type button');
+        const prevBtn = buttons[0];
+        const nextBtn = buttons[1];
+        const indicator = document.getElementById('indicator');
+
+        let currentPage = 1;
+
+        function showPage(page) {
+            if (page === 1) {
+                page1.classList.add('active');
+                page2.classList.remove('active');
+                indicator.textContent = 'الصفحة 1/2';
+            } else {
+                page1.classList.remove('active');
+                page2.classList.add('active');
+                indicator.textContent = 'الصفحة 2/2';
+            }
+            currentPage = page;
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < 2) {
+                    showPage(currentPage + 1);
+                }
+            });
+        }
+
+        const quizBtn = document.querySelector('button[style*="background:#f3b33d"]');
+        if (quizBtn) {
+            quizBtn.addEventListener('click', function() {
+                window.location.href = 'QuizLessonVectorPage.html';
+            });
+        }
+    </script>
+</body>
+</html>

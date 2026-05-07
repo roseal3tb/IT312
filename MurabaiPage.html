@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مربع · مربعي</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-cards {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        .dashboard-card {
+            width: 200px;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .dashboard-card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        .dashboard-card h4 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        .scores-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .scores-table th {
+            background: #0a2647;
+            color: white;
+            padding: 15px;
+        }
+        .scores-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .scores-table tr:last-child td {
+            border-bottom: none;
+        }
+        .score-badge {
+            background: #f3b33d;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .none-badge {
+            background: #ddd;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: #666;
+        }
+        .stats-box {
+            background: #eaf3fd;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px 0;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+        }
+        .stat-label {
+            color: #666;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0a2647;
+        }
+        .refresh-note {
+            text-align: left;
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 10px;
+        }
+        .view-all-btn {
+            display: inline-block;
+            background: #f3b33d;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+        .view-all-btn:hover {
+            background: #e0a02d;
+        }
+    </style>
+</head>
+<body>
+<div class="page-prototype">
+
+    <div class="navbar">
+        <div class="nav-right">
+            <a href="HomePage.HTML"><img src="images/right-logo.png" alt="مربع" class="header-logo-right"></a>
+            <a href="HomePage.HTML">الرئيسية</a>
+            <a href="CoursePage.HTML">المجتمعات</a>
+            <a href="MurabaiPage.html">مربعي</a>
+            <a href="AboutUsPage.HTML">من نحن</a>
+            <a href="ContactUsPage.HTML">تواصل معنا</a>
+        </div>
+        <div class="nav-left"><img src="images/left-logo.png" alt="Logo" class="header-logo-left"></div>
+    </div>
+
+    <div class="content">
+        <div style="font-size:0.9rem; color:gray; margin-bottom:20px;">
+            <a href="HomePage.HTML" style="text-decoration:none; color:gray;">الرئيسية</a> &gt;
+            <span>مربعي</span>
+        </div>
+
+        <h1 style="font-size:2.5rem;">مربعي</h1>
+
+        <div class="dashboard-cards">
+            <a href="MyNotesPage.html" class="dashboard-card">
+                <img src="images/notes.jpg" alt="ملاحظاتي">
+                <h4>ملاحظاتي</h4>
+            </a>
+            <a href="TeacherEvaluationPage.html" class="dashboard-card">
+                <img src="images/eval.jpg" alt="تقييم المعلمين">
+                <h4>تقييم المعلمين</h4>
+            </a>
+            <a href="ResultPage.html" class="dashboard-card">
+                <img src="images/result.jpg" alt="نتائجي">
+                <h4>نتائجي</h4>
+            </a>
+        </div>
+
+        <!-- إحصائيات حقيقية من localStorage -->
+        <div class="stats-box">
+            <div class="stat-item">
+                <span class="stat-label">الدروس المكتملة</span>
+                <div class="stat-value" id="completedCount">0</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">المعدل العام</span>
+                <div class="stat-value" id="averageScore">0%</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">أفضل نتيجة</span>
+                <div class="stat-value" id="bestScore">0</div>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h3 style="margin: 30px 0 20px;">📊 نتائج اختباراتي</h3>
+            <a href="ResultPage.html" class="view-all-btn">عرض جميع النتائج التفصيلية ←</a>
+        </div>
+        
+        <div id="scoresContainer"></div>
+    </div>
+
+    <div class="custom-footer">
+        <div class="footer-col">
+            <h4>حساباتنا</h4>
+            <ul class="bullet-list social-links">
+                <li><img src="images/snapchat.PNG"> murabba3</li>
+                <li><img src="images/x.PNG"> murabba3</li>
+                <li><img src="images/instagram.JPG"> murabba3</li>
+            </ul>
+        </div>
+        <div class="logo-placeholder">
+            <img src="images/footer.png" alt="شعار مربع">
+        </div>
+        <div class="footer-col">
+            <h4>تواصل معنا</h4>
+            <ul class="bullet-list">
+                <li>📧 info@murabba3.com</li>
+                <li>📞 +966 50 123 4567</li>
+                <li>📍 الرياض، السعودية</li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        Copyright © 2026 مربع. جميع الحقوق محفوظة
+    </div>
+
+<script>
+    // نفس قائمة الدروس المستخدمة في ResultPage.html
+    const ALL_LESSONS = [
+        { id: 'Lesson1', name: 'مقدمة في البرمجة باستخدام Java' },
+        { id: 'Lesson2', name: 'ريادة الأعمال' },
+        { id: 'Lesson3', name: 'أساسيات الشعر العربي' },
+        { id: 'Lesson4', name: 'أصول الفقه' },
+        { id: 'Lesson5', name: 'الحوسبة اللاسلكية والمحمولة' },
+        { id: 'Lesson6', name: 'التفسير الموضوعي' }
+    ];
+
+    // جلب أفضل نتيجة لدرس معين من localStorage
+    function getBestScoreForLesson(lessonId) {
+        const key = `bestScore_${lessonId}`;
+        const stored = localStorage.getItem(key);
+        if (stored !== null && !isNaN(parseFloat(stored))) {
+            return parseFloat(stored);
+        }
+        return null; // لم يختبر بعد
+    }
+
+    // جلب جميع النتائج (الدروس التي تم اختبارها فقط)
+    function getAllScores() {
+        const scores = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('bestScore_')) {
+                let lessonId = key.replace('bestScore_', '');
+                const score = parseFloat(localStorage.getItem(key));
+                // البحث عن اسم الدرس
+                const lesson = ALL_LESSONS.find(l => l.id === lessonId);
+                if (lesson && !isNaN(score)) {
+                    scores.push({ lesson: lesson.name, lessonId: lessonId, score: score });
+                }
+            }
+        }
+        return scores;
+    }
+
+    // عرض جدول النتائج والإحصائيات
+   // عرض جدول النتائج والإحصائيات بناءً على المتطلبات الجديدة
+    function renderScoresAndStats() {
+        const scores = getAllScores(); // جلب الدروس التي لها درجات فقط
+        const container = document.getElementById('scoresContainer');
+        
+        // 1. تحديث الإحصائيات العلوية
+        const completedCount = scores.length;
+        document.getElementById('completedCount').innerHTML = `${completedCount} <span style="font-size:1rem;">/ ${ALL_LESSONS.length}</span>`;
+        
+        if (completedCount > 0) {
+            const totalScore = scores.reduce((sum, s) => sum + s.score, 0);
+            const averageScore = totalScore / completedCount;
+            const bestOverall = Math.max(...scores.map(s => s.score));
+            
+            document.getElementById('averageScore').innerText = Math.round(averageScore) + '%';
+            document.getElementById('bestScore').innerText = Math.round(bestOverall);
+
+            // 2. بناء الجدول الديناميكي (يظهر فقط إذا كان هناك نتائج)
+            let tableHTML = `
+                <table class="scores-table">
+                    <thead>
+                        <tr>
+                            <th>الدرس</th>
+                            <th>أفضل درجة</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            // إضافة الصفوف بناءً على النتائج الموجودة في localStorage فقط
+            scores.forEach(item => {
+                const rounded = Math.round(item.score);
+                const statusDisplay = rounded >= 70 ? '✅ مجتاز' : '🔄 يحتاج مراجعة';
+                
+                tableHTML += `
+                    <tr>
+                        <td><strong>${escapeHtml(item.lesson)}</strong></td>
+                        <td><span class="score-badge">${rounded}%</span></td>
+                        <td>${statusDisplay}</td>
+                    </tr>
+                `;
+            });
+            
+            tableHTML += `</tbody></table>`;
+            container.innerHTML = tableHTML;
+
+        } else {
+            // 3. إذا لم يكمل الطالب أي اختبار، لا يتم عرض الجدول
+            document.getElementById('averageScore').innerText = '0%';
+            document.getElementById('bestScore').innerText = '0';
+            
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px; background:#f9f9f9; border-radius:20px; color:#666; border: 2px dashed #ddd;">
+                    <p>لا توجد نتائج لعرضها حالياً. سيظهر جدول النتائج هنا فور إكمال أول اختبار لك.</p>
+                    <a href="CoursePage.HTML" style="color:#f3b33d; font-weight:bold; text-decoration:none;">تصفح المجتمعات الآن ←</a>
+                </div>
+            `;
+        }
+    }
+    
+    // دالة لتجنب مشاكل الـ HTML injection
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // تحديث البيانات عند تحميل الصفحة
+    renderScoresAndStats();
+    
+    // الاستماع لأي تحديثات في localStorage (مثلاً عند العودة من صفحة الاختبار)
+    window.addEventListener('storage', function(e) {
+        if (e.key && e.key.startsWith('bestScore_')) {
+            renderScoresAndStats();
+        }
+    });
+    
+    // بالإضافة إلى تحديث كل 3 ثواني للتأكد من المزامنة (اختياري)
+    let refreshInterval = setInterval(function() {
+        renderScoresAndStats();
+    }, 3000);
+    
+    // إيقاف التحديث إذا غادر المستخدم الصفحة (تحسين الأداء)
+    window.addEventListener('beforeunload', function() {
+        if (refreshInterval) clearInterval(refreshInterval);
+    });
+</script>
+
+</body>
+</html>
