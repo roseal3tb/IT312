@@ -100,6 +100,7 @@
             justify-content: center;
             gap: 20px;
             margin-top: 30px;
+            align-items: center;
         }
         .breadcrumb {
             font-size: 0.9rem;
@@ -108,6 +109,10 @@
         .breadcrumb a {
             color: gray;
             text-decoration: none;
+        }
+        #deleteForm {
+            display: inline-block;
+            margin: 0;
         }
     </style>
 </head>
@@ -136,6 +141,7 @@
         <h1>ملاحظاتي</h1>
 
         <div class="notes-container">
+            <!-- Add Form (موجود مسبقاً) -->
             <div class="add-form">
                 <form id="addNoteForm">
                     <div class="form-group">
@@ -153,15 +159,18 @@
                         </select>
                         <div id="priorityError" class="error-message">الرجاء اختيار الأولوية</div>
                     </div>
-                    <button type="button" id="saveNoteBtn" class="btn btn-primary">حفظ الملاحظة</button>
+                    <button type="submit" id="saveNoteBtn" class="btn btn-primary">حفظ الملاحظة</button>
                 </form>
             </div>
 
             <div id="notesList"></div>
 
+            <!-- Action Bar مع Delete Form (تم التعديل) -->
             <div class="action-bar">
                 <a href="MurabaiPage.html" class="btn btn-primary" style="text-decoration: none;">→ السابق</a>
-                <button id="deleteSelectedBtn" class="btn btn-danger">حذف المحدد</button>
+                <form id="deleteForm" onsubmit="return false;">
+                    <button type="submit" id="deleteSelectedBtn" class="btn btn-danger">حذف المحدد</button>
+                </form>
             </div>
         </div>
     </div>
@@ -270,11 +279,10 @@
         document.getElementById('priorityError').style.display = 'none';
     }
 
-   function validateForm(text, priority) {
+    function validateForm(text, priority) {
         let isValid = true;
         let errorMessages = [];
 
-        // Check for text length
         if (!text || text.trim().length < 30) {
             document.getElementById('textError').style.display = 'block';
             errorMessages.push("Note description is empty or it is very short; less than 30 characters.");
@@ -283,7 +291,6 @@
             document.getElementById('textError').style.display = 'none';
         }
 
-        // Check for priority selection
         if (!priority) {
             document.getElementById('priorityError').style.display = 'block';
             errorMessages.push("There is no priority selected.");
@@ -292,7 +299,6 @@
             document.getElementById('priorityError').style.display = 'none';
         }
 
-        // If there are errors, show the alert exactly as requested
         if (!isValid) {
             alert(errorMessages.join("\n") + "\n");
         }
@@ -306,7 +312,9 @@
         return div.innerHTML;
     }
 
-    document.getElementById('saveNoteBtn').addEventListener('click', function() {
+    // Add Form Submit (تم التعديل من click إلى submit)
+    document.getElementById('addNoteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         const text = document.getElementById('noteText').value;
         const priority = document.getElementById('notePriority').value;
         if (validateForm(text, priority)) {
@@ -314,7 +322,9 @@
         }
     });
 
-    document.getElementById('deleteSelectedBtn').addEventListener('click', function() {
+    // Delete Form Submit (تم التعديل من click إلى submit)
+    document.getElementById('deleteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
         deleteSelectedNotes();
     });
 

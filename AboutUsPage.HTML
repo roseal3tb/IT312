@@ -8,13 +8,30 @@
     <style>
         .teachers-scroll {
             display: flex;
-            flex-wrap: wrap;
+            overflow-x: auto;
+            overflow-y: hidden;
             gap: 25px;
-            padding: 20px 0;
-            justify-content: center;
+            padding: 20px 10px;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
+        
+        /* إخفاء شريط التمرير في Chrome/Safari (اختياري) */
+        .teachers-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .teachers-scroll::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        .teachers-scroll::-webkit-scrollbar-thumb {
+            background: #f3b33d;
+            border-radius: 10px;
+        }
+        
         .teacher-card {
-            width: 250px;
+            flex: 0 0 auto;
+            width: 280px;
             background: white;
             border-radius: 20px;
             padding: 20px;
@@ -147,68 +164,69 @@
         </div>
     </div>
 
- <div class="custom-footer">
-    <div class="footer-col">
-        <h4>حساباتنا</h4>
-        <ul class="bullet-list social-links">
-            <li><img src="images/snapchat.PNG"> murabba3</li>
-            <li><img src="images/x.PNG"> murabba3</li>
-            <li><img src="images/instagram.JPG"> murabba3</li>
-        </ul>
+    <div class="custom-footer">
+        <div class="footer-col">
+            <h4>حساباتنا</h4>
+            <ul class="bullet-list social-links">
+                <li><img src="images/snapchat.PNG"> murabba3</li>
+                <li><img src="images/x.PNG"> murabba3</li>
+                <li><img src="images/instagram.JPG"> murabba3</li>
+            </ul>
+        </div>
+        <div class="logo-placeholder">
+            <img src="images/footer.png" alt="شعار مربع">
+        </div>
+        <div class="footer-col">
+            <h4>تواصل معنا</h4>
+            <ul class="bullet-list">
+                <li>📧 info@murabba3.com</li>
+                <li>📞 +966 50 123 4567</li>
+                <li>📍 الرياض، السعودية</li>
+            </ul>
+        </div>
     </div>
-    <div class="logo-placeholder">
-        <img src="images/footer.png" alt="شعار مربع">
+    <div class="copyright">
+        Copyright © 2026 مربع. جميع الحقوق محفوظة
     </div>
-    <div class="footer-col">
-        <h4>تواصل معنا</h4>
-        <ul class="bullet-list">
-            <li>📧 info@murabba3.com</li>
-            <li>📞 +966 50 123 4567</li>
-            <li>📍 الرياض، السعودية</li>
-        </ul>
-    </div>
-</div>
-<div class="copyright">
-    Copyright © 2026 مربع. جميع الحقوق محفوظة
-</div>
 
-<script>
-    const container = document.getElementById('teachersContainer');
-    let cards = Array.from(container.getElementsByClassName('teacher-card'));
+    <script>
+        const container = document.getElementById('teachersContainer');
+        let cards = Array.from(container.getElementsByClassName('teacher-card'));
 
-    function displayTeachers(teachersArray) {
-        teachersArray.forEach(card => container.appendChild(card));
-    }
-
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+        function displayTeachers(teachersArray) {
+            container.innerHTML = '';
+            teachersArray.forEach(card => container.appendChild(card));
         }
-        return array;
-    }
 
-    const shuffledCards = shuffleArray([...cards]);
-    displayTeachers(shuffledCards);
-
-    document.getElementById('sort').addEventListener('change', function() {
-        const sortValue = this.value;
-        let sortedCards = [...cards];
-        
-        if (sortValue === 'name-asc') {
-            sortedCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name, 'ar'));
-        } else if (sortValue === 'name-desc') {
-            sortedCards.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name, 'ar'));
-        } else if (sortValue === 'exp-asc') {
-            sortedCards.sort((a, b) => parseInt(a.dataset.exp) - parseInt(b.dataset.exp));
-        } else if (sortValue === 'exp-desc') {
-            sortedCards.sort((a, b) => parseInt(b.dataset.exp) - parseInt(a.dataset.exp));
-        } else {
-            sortedCards = shuffleArray([...cards]);
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
         }
-        
-        displayTeachers(sortedCards);
-    });
-</script>
+
+        const shuffledCards = shuffleArray([...cards]);
+        displayTeachers(shuffledCards);
+
+        document.getElementById('sort').addEventListener('change', function() {
+            const sortValue = this.value;
+            let sortedCards = [...cards];
+            
+            if (sortValue === 'name-asc') {
+                sortedCards.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name, 'ar'));
+            } else if (sortValue === 'name-desc') {
+                sortedCards.sort((a, b) => b.dataset.name.localeCompare(a.dataset.name, 'ar'));
+            } else if (sortValue === 'exp-asc') {
+                sortedCards.sort((a, b) => parseInt(a.dataset.exp) - parseInt(b.dataset.exp));
+            } else if (sortValue === 'exp-desc') {
+                sortedCards.sort((a, b) => parseInt(b.dataset.exp) - parseInt(a.dataset.exp));
+            } else {
+                sortedCards = shuffleArray([...cards]);
+            }
+            
+            displayTeachers(sortedCards);
+        });
+    </script>
 </body>
 </html>

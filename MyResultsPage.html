@@ -137,78 +137,24 @@
         <h1 style="font-size:2.5rem; margin-bottom:20px;">نتائج اختباراتي</h1>
 
         <div class="results-container">
-            <!-- بطاقات ملخصة -->
+            <!-- بطاقات ملخصة (ديناميكية) -->
             <div class="summary-cards">
                 <div class="summary-card">
                     <h3>الدروس المكتملة</h3>
-                    <div class="number">4</div>
+                    <div class="number" id="completedCount">0</div>
                 </div>
                 <div class="summary-card">
                     <h3>المعدل العام</h3>
-                    <div class="number">88%</div>
+                    <div class="number" id="averageScore">0%</div>
                 </div>
                 <div class="summary-card">
                     <h3>أفضل نتيجة</h3>
-                    <div class="number">95</div>
+                    <div class="number" id="bestScore">0</div>
                 </div>
             </div>
 
-            <!-- جدول النتائج -->
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>الدرس</th>
-                        <th>الدرجة</th>
-                        <th>النسبة</th>
-                        <th>التاريخ</th>
-                        <th>أفضل نتيجة</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>مقدمة في البرمجة</td>
-                        <td><span class="score-badge">95</span></td>
-                        <td>95%</td>
-                        <td>2026-03-10</td>
-                        <td class="best-score">95 ⭐</td>
-                    </tr>
-                    <tr>
-                        <td>ريادة الأعمال</td>
-                        <td><span class="score-badge">88</span></td>
-                        <td>88%</td>
-                        <td>2026-03-12</td>
-                        <td>92</td>
-                    </tr>
-                    <tr>
-                        <td>الكتابة الإبداعية</td>
-                        <td><span class="score-badge">78</span></td>
-                        <td>78%</td>
-                        <td>2026-03-14</td>
-                        <td>85</td>
-                    </tr>
-                    <tr>
-                        <td>أصول الفقه</td>
-                        <td><span class="score-badge">92</span></td>
-                        <td>92%</td>
-                        <td>2026-03-15</td>
-                        <td>94</td>
-                    </tr>
-                    <tr>
-                        <td>تطوير التطبيقات</td>
-                        <td><span class="none-badge">لم يحضر</span></td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-                    <tr>
-                        <td>التفسير الموضوعي</td>
-                        <td><span class="none-badge">لم يحضر</span></td>
-                        <td>—</td>
-                        <td>—</td>
-                        <td>—</td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- جدول النتائج (ديناميكي) -->
+            <div id="resultsTableContainer"></div>
 
             <!-- زر العودة لمربعي -->
             <div style="text-align: center;">
@@ -220,13 +166,13 @@
     <!-- الفوتر -->
     <div class="custom-footer">
        <div class="footer-col">
-    <h4>حساباتنا</h4>
-    <ul class="bullet-list social-links">
-        <li><img src="images/snapchat.PNG"> murabba3</li>
-        <li><img src="images/x.PNG"> murabba3</li>
-        <li><img src="images/instagram.JPG"> murabba3</li>
-    </ul>
-</div>
+            <h4>حساباتنا</h4>
+            <ul class="bullet-list social-links">
+                <li><img src="images/snapchat.PNG"> murabba3</li>
+                <li><img src="images/x.PNG"> murabba3</li>
+                <li><img src="images/instagram.JPG"> murabba3</li>
+            </ul>
+        </div>
         <div class="logo-placeholder">
             <img src="images/footer.png">
         </div>
@@ -244,5 +190,134 @@
     </div>
 
 </div>
+
+<script>
+    // قائمة جميع الدروس المتاحة
+    const ALL_LESSONS = [
+        { id: 'Lesson1', name: 'مقدمة في البرمجة باستخدام Java' },
+        { id: 'Lesson2', name: 'ريادة الأعمال' },
+        { id: 'Lesson3', name: 'أساسيات الشعر العربي' },
+        { id: 'Lesson4', name: 'أصول الفقه' },
+        { id: 'Lesson5', name: 'الحوسبة اللاسلكية والمحمولة' },
+        { id: 'Lesson6', name: 'التفسير الموضوعي' }
+    ];
+
+    // جلب أفضل نتيجة لدرس معين من localStorage
+    function getBestScoreForLesson(lessonId) {
+        const key = `bestScore_${lessonId}`;
+        const stored = localStorage.getItem(key);
+        if (stored !== null && !isNaN(parseFloat(stored))) {
+            return parseFloat(stored);
+        }
+        return null;
+    }
+
+    // جلب جميع النتائج (الدروس التي تم اختبارها فقط)
+    function getAllScores() {
+        const scores = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('bestScore_')) {
+                let lessonId = key.replace('bestScore_', '');
+                const score = parseFloat(localStorage.getItem(key));
+                const lesson = ALL_LESSONS.find(l => l.id === lessonId);
+                if (lesson && !isNaN(score)) {
+                    scores.push({ 
+                        lesson: lesson.name, 
+                        lessonId: lessonId, 
+                        score: score 
+                    });
+                }
+            }
+        }
+        return scores;
+    }
+
+    // عرض الجدول والإحصائيات
+    function renderResults() {
+        const scores = getAllScores();
+        const container = document.getElementById('resultsTableContainer');
+        
+        // 1. تحديث الإحصائيات
+        const completedCount = scores.length;
+        document.getElementById('completedCount').innerHTML = `${completedCount} <span style="font-size:1rem;">/ ${ALL_LESSONS.length}</span>`;
+        
+        if (completedCount > 0) {
+            const totalScore = scores.reduce((sum, s) => sum + s.score, 0);
+            const averageScore = totalScore / completedCount;
+            const bestOverall = Math.max(...scores.map(s => s.score));
+            
+            document.getElementById('averageScore').innerText = Math.round(averageScore) + '%';
+            document.getElementById('bestScore').innerText = Math.round(bestOverall);
+        } else {
+            document.getElementById('averageScore').innerText = '0%';
+            document.getElementById('bestScore').innerText = '0';
+        }
+        
+        // 2. بناء الجدول الديناميكي
+        if (scores.length === 0) {
+            container.innerHTML = `
+                <div style="text-align:center; padding:40px; background:#f9f9f9; border-radius:20px; color:#666; border: 2px dashed #ddd;">
+                    <p>📭 لا توجد نتائج لعرضها حالياً.</p>
+                    <p style="margin-top:10px;">قم بحل أحد الاختبارات لتظهر نتيجتك هنا!</p>
+                    <a href="CoursePage.HTML" style="color:#f3b33d; font-weight:bold; text-decoration:none;">تصفح المجتمعات الآن ←</a>
+                </div>
+            `;
+            return;
+        }
+        
+        // ترتيب النتائج من الأعلى إلى الأقل
+        scores.sort((a, b) => b.score - a.score);
+        
+        let tableHTML = `
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>الدرس</th>
+                        <th>الدرجة</th>
+                        <th>النسبة</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
+        scores.forEach(item => {
+            const rounded = Math.round(item.score);
+            const status = rounded >= 70 ? '✅ مجتاز' : '🔄 يحتاج مراجعة';
+            const isBest = rounded >= 90 ? '⭐' : '';
+            
+            tableHTML += `
+                <tr>
+                    <td style="text-align:right;"><strong>${escapeHtml(item.lesson)}</strong> ${isBest}</td>
+                    <td><span class="score-badge">${rounded}%</span></td>
+                    <td>${rounded}%</td>
+                    <td>${status}</td>
+                </tr>
+            `;
+        });
+        
+        tableHTML += `</tbody>赶</table>`;
+        container.innerHTML = tableHTML;
+    }
+    
+    // دالة لتجنب مشاكل الـ HTML injection
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    // تحديث البيانات عند تحميل الصفحة
+    renderResults();
+    
+    // الاستماع لأي تحديثات في localStorage
+    window.addEventListener('storage', function(e) {
+        if (e.key && e.key.startsWith('bestScore_')) {
+            renderResults();
+        }
+    });
+</script>
+
 </body>
 </html>
